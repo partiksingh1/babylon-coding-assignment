@@ -16,23 +16,43 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
+  
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+  
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
+  
+    if (isRegistering) {
+      if (!fullName.trim()) {
+        setError('Full name is required for registration');
+        return;
+      }
+  
+      if (!passwordRegex.test(password)) {
+        setError(
+          'Password must be at least 6 characters and include uppercase, lowercase, number, and special character'
+        );
+        return;
+      }
+    }
+  
     try {
       let user: FirebaseUser;
       if (isRegistering) {
-        if (!fullName) {
-          setError('Full name is required for registration');
-          return;
-        }
-        user = await registerUser(email, password, fullName);
+        user = await registerUser(email, password, fullName.trim());
       } else {
         user = await loginUser(email, password);
       }
       router.push('/');
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || 'An error occurred');
     }
   };
+  
+  
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
