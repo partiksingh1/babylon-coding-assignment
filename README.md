@@ -65,7 +65,6 @@ A simple Next.js application with TypeScript that implements user authentication
   - `/login/page.tsx`: Login page with form for registration and login.
   - `/page.tsx`: Homepage with user greeting and logout button.
   - `/layout.tsx`: Root layout with global styles.
-  - `/globals.css`: Global CSS with Tailwind.
 
 - `/components`: Reusable React components.
   - `LogoutButton.tsx`: Logout button component.
